@@ -7,7 +7,7 @@
 ![Tests](https://img.shields.io/badge/tests-100%25_Coverage-success.svg)
 
 A real-time, **AI-powered medical monitoring dashboard** designed for next-generation mechanical ventilators.  
-The system continuously tracks **airway pressure, flow, and volume**, while running a **Predictive Maintenance Algorithm** to detect mechanical failures *before* they reach a critical level.
+The system continuously tracks **airway pressure, flow, and volume**, while running a **Predictive Maintenance Algorithm** to detect mechanical failures _before_ they reach a critical level.
 
 ![Dashboard Preview](docs/ss1.png)
 
@@ -20,9 +20,9 @@ The system continuously tracks **airway pressure, flow, and volume**, while runn
 
 - **🧠 AI Predictive Engine**  
   Detects abnormal pressure trends using **Linear Regression (NumPy)** to predict:
-  - Filter clogging  
+  - Filter clogging
   - Motor degradation  
-  up to **20 seconds in advance**.
+    up to **20 seconds in advance**.
 
 - **🛡️ Auto-Safety Protocol**  
   Automatically triggers an **Emergency Stop** when the AI predicts that a critical safety threshold will be exceeded.
@@ -30,23 +30,23 @@ The system continuously tracks **airway pressure, flow, and volume**, while runn
 - **🎨 Medical-Grade UI**  
   Clean, minimalist, iOS-style interface optimized for **high readability in clinical environments**.
 
-- **🧪 Robust Engineering**  
-  - **Frontend:** Type-safe React + Redux Toolkit  
-  - **Backend:** Clean Architecture with FastAPI  
-  - **Testing:** Full unit test coverage for both UI and AI logic  
+- **🧪 Robust Engineering**
+  - **Frontend:** Type-safe React + Redux Toolkit
+  - **Backend:** Clean Architecture with FastAPI
+  - **Testing:** Full unit test coverage for both UI and AI logic
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Component | Technology | Description |
-|--------|------------|------------|
-| **Frontend** | React 18 + TypeScript | Component-based UI architecture |
-| **State Management** | Redux Toolkit | Global state & emergency logic handling |
-| **Charts** | Recharts | Oscilloscope-style real-time waveforms |
-| **Backend** | Python FastAPI | High-performance async WebSocket server |
-| **AI / Math** | NumPy | Mathematical modeling & trend analysis |
-| **Testing** | Vitest & Pytest | Full-stack testing suite |
+| Component            | Technology            | Description                             |
+| -------------------- | --------------------- | --------------------------------------- |
+| **Frontend**         | React 18 + TypeScript | Component-based UI architecture         |
+| **State Management** | Redux Toolkit         | Global state & emergency logic handling |
+| **Charts**           | Recharts              | Oscilloscope-style real-time waveforms  |
+| **Backend**          | Python FastAPI        | High-performance async WebSocket server |
+| **AI / Math**        | NumPy                 | Mathematical modeling & trend analysis  |
+| **Testing**          | Vitest & Pytest       | Full-stack testing suite                |
 
 ---
 
@@ -154,3 +154,4 @@ AI-assisted fault prediction
 Medical safety-first design
 
 Clean architecture & test-driven development
+```

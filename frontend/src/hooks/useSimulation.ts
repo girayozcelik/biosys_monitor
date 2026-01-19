@@ -19,10 +19,10 @@ export const useSimulation = () => {
     if (isEmergency) {
       if (socketRef.current) {
         console.log("🛑 Emergency Shutdown");
-        socketRef.current.close(); 
-        socketRef.current = null; 
+        socketRef.current.close();
+        socketRef.current = null;
       }
-      return; 
+      return;
     }
 
     // 🟢 BAĞLANTIYI BAŞLAT
@@ -38,7 +38,6 @@ export const useSimulation = () => {
     };
 
     socket.onmessage = (event) => {
-      
       if (socketRef.current === null) return;
 
       try {
@@ -51,7 +50,7 @@ export const useSimulation = () => {
           if (response.payload) dispatch(addSensorData(response.payload));
         } else if (response.type === "STOPPED") {
           dispatch(addAlert(response.message));
-          dispatch(toggleEmergency()); 
+          dispatch(toggleEmergency());
         }
       } catch (error) {
         console.error("Veri hatası:", error);
@@ -71,5 +70,5 @@ export const useSimulation = () => {
         socket.close();
       }
     };
-  }, [dispatch, isEmergency]); 
+  }, [dispatch, isEmergency]);
 };

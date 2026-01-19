@@ -7,7 +7,7 @@
 ![Tests](https://img.shields.io/badge/tests-100%25_Coverage-success.svg)
 
 Yeni nesil mekanik ventilatörler için tasarlanmış, **Yapay Zeka destekli, gerçek zamanlı medikal izleme paneli**.  
-Sistem, hava yolu **basıncını, akışını ve hacmini** sürekli izlerken, mekanik arızaları kritik seviyeye ulaşmadan *önce* tespit eden bir **Kestirimci Bakım Algoritması** çalıştırır.
+Sistem, hava yolu **basıncını, akışını ve hacmini** sürekli izlerken, mekanik arızaları kritik seviyeye ulaşmadan _önce_ tespit eden bir **Kestirimci Bakım Algoritması** çalıştırır.
 
 ![Panel Önizlemesi](docs/ss1.png)
 
@@ -18,29 +18,29 @@ Sistem, hava yolu **basıncını, akışını ve hacmini** sürekli izlerken, me
 - **⚡ Gerçek Zamanlı İzleme** **WebSockets** üzerinden milisaniye altı sensör verisi akışı.
 
 - **🧠 YZ Kestirimci Motor** Aşağıdaki durumları **20 saniye önceden** tahmin etmek için **Lineer Regresyon (NumPy)** kullanarak anormal basınç trendlerini tespit eder:
-  - Filtre tıkanıklığı  
+  - Filtre tıkanıklığı
   - Motor yıpranması/bozulması
 
 - **🛡️ Otomatik Güvenlik Protokolü** Yapay zeka kritik bir güvenlik eşiğinin aşılacağını öngördüğünde otomatik olarak **Acil Durdurma** tetikler.
 
 - **🎨 Medikal Sınıf Arayüz** Klinik ortamlarda **yüksek okunabilirlik** için optimize edilmiş, temiz, minimalist, iOS tarzı arayüz.
 
-- **🧪 Sağlam Mühendislik** - **Frontend:** Tip güvenli React + Redux Toolkit  
-  - **Backend:** FastAPI ile Temiz Mimari (Clean Architecture)  
-  - **Test:** Hem UI hem de YZ mantığı için tam birim testi (Unit Test) kapsamı  
+- **🧪 Sağlam Mühendislik** - **Frontend:** Tip güvenli React + Redux Toolkit
+  - **Backend:** FastAPI ile Temiz Mimari (Clean Architecture)
+  - **Test:** Hem UI hem de YZ mantığı için tam birim testi (Unit Test) kapsamı
 
 ---
 
 ## 🛠️ Teknoloji Yığını
 
-| Bileşen | Teknoloji | Açıklama |
-|--------|------------|------------|
-| **Frontend** | React 18 + TypeScript | Bileşen tabanlı UI mimarisi |
-| **State Yönetimi** | Redux Toolkit | Global durum & acil durum lojistiği |
-| **Grafikler** | Recharts | Osiloskop tarzı gerçek zamanlı dalga formları |
-| **Backend** | Python FastAPI | Yüksek performanslı asenkron WebSocket sunucusu |
-| **YZ / Mat.** | NumPy | Matematiksel modelleme & trend analizi |
-| **Test** | Vitest & Pytest | Full-stack test süiti |
+| Bileşen            | Teknoloji             | Açıklama                                        |
+| ------------------ | --------------------- | ----------------------------------------------- |
+| **Frontend**       | React 18 + TypeScript | Bileşen tabanlı UI mimarisi                     |
+| **State Yönetimi** | Redux Toolkit         | Global durum & acil durum lojistiği             |
+| **Grafikler**      | Recharts              | Osiloskop tarzı gerçek zamanlı dalga formları   |
+| **Backend**        | Python FastAPI        | Yüksek performanslı asenkron WebSocket sunucusu |
+| **YZ / Mat.**      | NumPy                 | Matematiksel modelleme & trend analizi          |
+| **Test**           | Vitest & Pytest       | Full-stack test süiti                           |
 
 ---
 
@@ -136,3 +136,4 @@ YZ destekli hata tahmini
 Önce güvenlik (Safety-first) medikal tasarım prensibi
 
 Temiz mimari ve test güdümlü geliştirme (TDD)
+```
