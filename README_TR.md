@@ -1,94 +1,124 @@
-Biosys -  Ventilatör Monitörü (PoC)
+# Biosys Monitor (PoC)
 
+Bu proje, **gerçek zamanlı ventilatör telemetri izleme** ve basit bir **öngörücü bakım (predictive maintenance)** yaklaşımını göstermek amacıyla hazırlanmış bir **proof-of-concept (PoC)** çalışmasıdır.
 
-✨ Proje Genel Bakış
+Simüle edilmiş sensör verileri WebSocket üzerinden aktarılır, React tabanlı bir arayüzde görselleştirilir ve basit bir doğrusal regresyon modeliyle kısa vadeli riskli eğilimler tahmin edilir.
 
-Bu proje, Biosys için geliştirilmiş bir Kavram İspatı (PoC) çalışmasıdır ve yeni nesil bir ventilatör izleme paneli sunmaktadır. Sistem, olası cihaz arızalarını gerçekleşmeden önce tespit etmek için gerçek zamanlı veri görselleştirmesini Python tabanlı bir Yapay Zeka (AI) tahmin motoru ile birleştirir.
+---
 
-Sistem, ventilatör telemetri verilerini simüle eder ve kritik eşik aşımlarını 20 saniye önceden tahmin etmek için bir Lineer Regresyon modeli kullanır, böylece otomatik güvenlik protokollerini devreye sokar.
+![Biosys Ekran Görüntüsü](docs/ss1.png)
 
-✨ Temel Özellikler
+## Özellikler
 
-  - Gerçek Zamanlı İzleme: Basınç, hava akışı ve oksijen seviyelerinin anlık görselleştirilmesi için WebSocket üzerinden yüksek frekanslı veri akışı.
-  - Yapay Zeka Tahmin Motoru: Telemetri trendlerini analiz ederek arızaları öngören, özel NumPy tabanlı Lineer Regresyon modeli.
-  - Otomatik Güvenlik Protokolü: AI güven skoru kritik bir arıza öngördüğünde tetiklenen otomatik "Acil Durdurma" (Emergency Stop) sistemi.
-  - İnteraktif Panel: Dinamik veri grafikleri için React 18 ve Recharts ile oluşturulmuştur.
+- Gerçek zamanlı sensör verisi akışı (basınç, hava akışı, oksijen)
+- Canlı güncellenen interaktif grafikler
+- NumPy tabanlı basit öngörücü analiz (linear regression)
+- Kritik eşikler öngörüldüğünde Emergency Stop tetiklenmesi
+- Modüler ve sade frontend / backend mimarisi
 
-🛠 Teknoloji Yığını (Tech Stack)
+---
 
-Frontend (Ön Yüz)
+## Teknolojiler
 
-  - Framework: React 18 (TypeScript)
-  - Durum Yönetimi: Redux Toolkit
-  - Görselleştirme: Recharts
-  - Test: Vitest
+### Frontend
+- React 18 (TypeScript)
+- Redux Toolkit
+- Recharts
+- Vitest
 
-Backend (Arka Yüz)
+### Backend
+- Python
+- FastAPI
+- WebSockets
+- NumPy
+- Pytest
 
-  - API: Python FastAPI
-  - Veri İşleme: NumPy (AI/Matematik işlemleri için)
-  - Test: Pytest
-  - İletişim: WebSockets
+---
 
-⚙️ Kurulum ve Başlangıç
+## Proje Yapısı
 
-Gereksinimler
+```
+.
+├─ backend/         # FastAPI, simülasyon ve tahmin mantığı
+├─ frontend/        # React + TypeScript arayüz
+└─ docs/            # Notlar ve görseller
+```
 
-  - Node.js v18+
-  - Python v3.9+
+---
 
-1. Backend Kurulumu (FastAPI)
+## Kurulum
 
-Backend, simülasyon mantığını ve AI tahmin motorunu yönetir.
+### Gereksinimler
+- Node.js 18+
+- Python 3.9+
 
-# Backend klasörüne gidin
+---
+
+### Backend Çalıştırma
+
+```bash
 cd backend
 
-# Sanal ortam (virtual environment) oluşturun
 python -m venv venv
-
-# Sanal ortamı aktif edin
-# Windows için:
+# Windows
 venv\Scripts\activate
-# Mac/Linux için:
+# macOS / Linux
 source venv/bin/activate
 
-# Bağımlılıkları yükleyin
 pip install -r requirements.txt
-
-# Sunucuyu çalıştırın
 uvicorn main:app --reload
+```
 
-2. Frontend Kurulumu (React)
+Backend varsayılan olarak `http://localhost:8000` adresinde çalışır.
 
-Frontend, WebSocket akışını görselleştirir ve uyarıları görüntüler.
+---
 
-# Frontend klasörüne gidin
+### Frontend Çalıştırma
+
+```bash
 cd frontend
-
-# Bağımlılıkları yükleyin
 npm install
-
-# Geliştirme sunucusunu başlatın
 npm run dev
+```
 
-🧪 Testleri Çalıştırma
+Frontend: `http://localhost:5173`
 
-Proje, hem tahmin algoritması hem de arayüz bileşenleri için birim testleri (unit tests) içerir.
+---
 
-Backend Testleri:
+## Testler
 
+### Backend
+```bash
 cd backend
 pytest
+```
 
-Frontend Testleri:
-
+### Frontend
+```bash
 cd frontend
 npm run test
+```
 
-📸 Kullanım
+---
 
-1.  Hem Backend hem de Frontend sunucularını başlatın.
-2.  Tarayıcınızda http://localhost:5173 adresini (veya terminalde gösterilen portu) açın.
-3.  Telemetri akışını başlatmak için "Start Simulation" butonuna tıklayın.
-4.  "Status" (Durum) göstergesini izleyin; AI tahminlerine göre Normal, Warning (Uyarı) veya Critical (Kritik) olarak değişecektir.
+## Tasarım Notları
+
+- Telemetri verileri **tamamen simüle edilmiştir**.
+- Doğrusal regresyon, anlaşılabilir ve şeffaf olması için tercih edilmiştir.
+- Tahmin süresi (~20 saniye) PoC için belirlenmiş örnek bir değerdir.
+
+---
+
+## Geliştirme Fikirleri
+
+- Daha gelişmiş anomali tespiti
+- Veri kalıcılığı (PostgreSQL / SQLite)
+- Docker / Docker Compose
+- Kimlik doğrulama ve yetkilendirme
+- WebSocket akışı için uçtan uca testler
+
+---
+
+## Lisans
+
+MIT
