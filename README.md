@@ -6,9 +6,6 @@ A proof-of-concept project for **real-time ventilator telemetry monitoring** wit
 
 The system streams simulated sensor data over WebSockets, visualizes it in a React dashboard, and applies a lightweight linear-regression model to detect potentially dangerous trends a few seconds in advance.
 
-> ⚠️ **Disclaimer**  
-> This project is for educational and experimental purposes only.  
-> It is **not** a certified medical system and must not be used in real clinical environments.
 
 
 ![Biosys Ekran Görüntüsü](docs/ss1.png)
