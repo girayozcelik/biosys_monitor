@@ -1,96 +1,131 @@
-Biosys - Predictive Ventilator Monitor (PoC)
+# Biosys Monitor (PoC)
+
+
+
+A proof-of-concept project for **real-time ventilator telemetry monitoring** with a simple **predictive maintenance** layer.
+
+The system streams simulated sensor data over WebSockets, visualizes it in a React dashboard, and applies a lightweight linear-regression model to detect potentially dangerous trends a few seconds in advance.
+
+> ⚠️ **Disclaimer**  
+> This project is for educational and experimental purposes only.  
+> It is **not** a certified medical system and must not be used in real clinical environments.
 
 
 ![Biosys Ekran Görüntüsü](docs/ss1.png)
 
-✨ Project Overview
+---
 
-This project is developed as a Proof of Concept (PoC) for Biosys, demonstrating a next-generation ventilator monitoring dashboard. It integrates real-time data visualization with a Python-based AI predictive engine to detect potential device failures before they occur.
+## Features
 
-The system simulates ventilator telemetry data and uses a Linear Regression model to predict critical threshold breaches up to 20 seconds in advance, triggering automated safety protocols.
+- Real-time telemetry streaming (pressure, airflow, oxygen)
+- Interactive charts with live updates
+- Simple predictive analysis using NumPy (linear regression)
+- Emergency Stop trigger when predicted values exceed safe thresholds
+- Clean, modular frontend and backend separation
 
-✨ Key Features
+---
 
-  - Real-Time Monitoring: High-frequency data streaming via WebSockets for immediate visualization of pressure, airflow, and oxygen levels.
-  - AI Predictive Engine: Custom NumPy based Linear Regression model that analyzes telemetry trends to forecast failures.
-  - Auto-Safety Protocol: Automated "Emergency Stop" trigger when the AI confidence score predicts a critical failure.
-  - Interactive Dashboard: Built with React 18 & Recharts for dynamic data plotting.
+## Tech Stack
 
-🛠 Tech Stack
+### Frontend
+- React 18 (TypeScript)
+- Redux Toolkit
+- Recharts
+- Vitest
 
-Frontend
+### Backend
+- Python
+- FastAPI
+- WebSockets
+- NumPy
+- Pytest
 
-  - Framework: React 18 (TypeScript)
-  - State Management: Redux Toolkit
-  - Visualization: Recharts
-  - Testing: Vitest
+---
 
-Backend
+## Project Structure
 
-  - API: Python FastAPI
-  - Data Processing: NumPy (for AI/Math operations)
-  - Testing: Pytest
-  - Communication: WebSockets
+```
+.
+├─ backend/         # FastAPI server, simulation, prediction logic
+├─ frontend/        # React + TypeScript dashboard
+└─ docs/            # Notes and assets
+```
 
-⚙️ Getting Started
+---
 
-Prerequisites
+## Getting Started
 
-  - Node.js v18+
-  - Python v3.9+
+### Requirements
+- Node.js 18+
+- Python 3.9+
 
-1. Backend Setup (FastAPI)
+---
 
-The backend handles the simulation logic and the AI prediction engine.
+### Backend Setup
 
-# Navigate to the backend directory
+```bash
 cd backend
 
-# Create a virtual environment
 python -m venv venv
-
-# Activate the virtual environment
-# Windows:
+# Windows
 venv\Scripts\activate
-# Mac/Linux:
+# macOS / Linux
 source venv/bin/activate
 
-# Install dependencies
 pip install -r requirements.txt
-
-# Run the server
 uvicorn main:app --reload
+```
 
-2. Frontend Setup (React)
+Backend will run on `http://localhost:8000`.
 
-The frontend visualizes the WebSocket stream and displays alerts.
+---
 
-# Navigate to the frontend directory
+### Frontend Setup
+
+```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start the development server
 npm run dev
+```
 
-🧪 Running Tests
+Frontend will be available at `http://localhost:5173`.
 
-The project includes unit tests for both the predictive algorithm and the UI components.
+---
 
-Backend Tests:
+## Running Tests
 
+### Backend
+```bash
 cd backend
 pytest
+```
 
-Frontend Tests:
-
+### Frontend
+```bash
 cd frontend
 npm run test
+```
 
-📸 Usage
+---
 
-1.  Start both Backend and Frontend servers.
-2.  Open http://localhost:5173 (or the port shown in your terminal).
-3.  Click "Start Simulation" to begin the telemetry stream.
-4.  Observe the "Status" indicator; it will change from Normal to Warning or Critical based on the AI's predictions.
+## Design Notes
+
+- Telemetry data is **simulated** to keep the system deterministic and testable.
+- Linear regression was chosen intentionally for clarity and transparency.
+- Prediction window (~20 seconds) is a demo value and can be tuned.
+
+---
+
+## Possible Improvements
+
+- Advanced anomaly detection (rolling statistics, ARIMA, LSTM)
+- Data persistence (PostgreSQL / SQLite)
+- Docker & Docker Compose setup
+- Authentication and role-based access
+- End-to-end tests for WebSocket flow
+
+---
+
+## License
+
+MIT
