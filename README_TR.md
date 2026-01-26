@@ -1,139 +1,94 @@
-# 🫁 Biosys Kestirimci Ventilatör Monitörü
-
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/frontend-React_18-61DAFB.svg)
-![FastAPI](https://img.shields.io/badge/backend-FastAPI-009688.svg)
-![AI](https://img.shields.io/badge/AI-Linear_Regression-FF6F00.svg)
-![Tests](https://img.shields.io/badge/tests-100%25_Coverage-success.svg)
-
-Yeni nesil mekanik ventilatörler için tasarlanmış, **Yapay Zeka destekli, gerçek zamanlı medikal izleme paneli**.  
-Sistem, hava yolu **basıncını, akışını ve hacmini** sürekli izlerken, mekanik arızaları kritik seviyeye ulaşmadan _önce_ tespit eden bir **Kestirimci Bakım Algoritması** çalıştırır.
-
-![Panel Önizlemesi](docs/ss1.png)
-
----
-
-## 🚀 Temel Özellikler
-
-- **⚡ Gerçek Zamanlı İzleme** **WebSockets** üzerinden milisaniye altı sensör verisi akışı.
-
-- **🧠 YZ Kestirimci Motor** Aşağıdaki durumları **20 saniye önceden** tahmin etmek için **Lineer Regresyon (NumPy)** kullanarak anormal basınç trendlerini tespit eder:
-  - Filtre tıkanıklığı
-  - Motor yıpranması/bozulması
-
-- **🛡️ Otomatik Güvenlik Protokolü** Yapay zeka kritik bir güvenlik eşiğinin aşılacağını öngördüğünde otomatik olarak **Acil Durdurma** tetikler.
-
-- **🎨 Medikal Sınıf Arayüz** Klinik ortamlarda **yüksek okunabilirlik** için optimize edilmiş, temiz, minimalist, iOS tarzı arayüz.
-
-- **🧪 Sağlam Mühendislik** - **Frontend:** Tip güvenli React + Redux Toolkit
-  - **Backend:** FastAPI ile Temiz Mimari (Clean Architecture)
-  - **Test:** Hem UI hem de YZ mantığı için tam birim testi (Unit Test) kapsamı
-
----
-
-## 🛠️ Teknoloji Yığını
-
-| Bileşen            | Teknoloji             | Açıklama                                        |
-| ------------------ | --------------------- | ----------------------------------------------- |
-| **Frontend**       | React 18 + TypeScript | Bileşen tabanlı UI mimarisi                     |
-| **State Yönetimi** | Redux Toolkit         | Global durum & acil durum lojistiği             |
-| **Grafikler**      | Recharts              | Osiloskop tarzı gerçek zamanlı dalga formları   |
-| **Backend**        | Python FastAPI        | Yüksek performanslı asenkron WebSocket sunucusu |
-| **YZ / Mat.**      | NumPy                 | Matematiksel modelleme & trend analizi          |
-| **Test**           | Vitest & Pytest       | Full-stack test süiti                           |
-
----
-
-## 🏗️ Mimari
-
-Proje, ölçeklenebilirlik, test edilebilirlik ve sorumlulukların ayrılmasını (separation of concerns) sağlamak için **Temiz Mimari** prensiplerini takip eder.
-
-```text
-biosys-dashboard/
-├── backend/               # Python YZ Sunucusu
-│   ├── app/
-│   │   ├── core/          # Konfigürasyon & sabitler
-│   │   ├── schemas/       # Pydantic modelleri
-│   │   ├── services/      # YZ Motoru & simülasyon mantığı
-│   │   └── api/           # WebSocket rotaları
-│   └── tests/             # Pytest dosyaları
-│
-└── src/                   # React Frontend
-    ├── components/        # Tekrar kullanılabilir UI bileşenleri
-    ├── hooks/             # Özel hook'lar (useSimulation)
-    ├── store/             # Redux slice'ları & global state
-    └── test/              # Vitest test dosyaları
+Biosys -  Ventilatör Monitörü (PoC)
 
 
-    🧠 Yapay Zeka Nasıl Çalışır? (Kestirimci Bakım)
-Simülasyon Backend, bir Sapma Faktörü (Drift Factor) kullanarak toz ve kir biriktiren bir ventilatör motorunu simüle eder.
+✨ Proje Genel Bakış
 
-Veri Toplama AIEngine sınıfı, son 30 basınç okumasından oluşan kayan bir pencere (sliding window) tutar.
+Bu proje, Biosys için geliştirilmiş bir Kavram İspatı (PoC) çalışmasıdır ve yeni nesil bir ventilatör izleme paneli sunmaktadır. Sistem, olası cihaz arızalarını gerçekleşmeden önce tespit etmek için gerçek zamanlı veri görselleştirmesini Python tabanlı bir Yapay Zeka (AI) tahmin motoru ile birleştirir.
 
-Lineer Regresyon np.polyfit kullanarak algoritma, basınç trendinin eğimini hesaplar.
+Sistem, ventilatör telemetri verilerini simüle eder ve kritik eşik aşımlarını 20 saniye önceden tahmin etmek için bir Lineer Regresyon modeli kullanır, böylece otomatik güvenlik protokollerini devreye sokar.
 
-Tahmin (Projeksiyon) Model, basınç değerlerini gelecekteki 50 zaman adımı için projelendirir.
+✨ Temel Özellikler
 
-Müdahale Eğer Tahmini_Değer > Güvenlik_Eşiği ise:
+  - Gerçek Zamanlı İzleme: Basınç, hava akışı ve oksijen seviyelerinin anlık görselleştirilmesi için WebSocket üzerinden yüksek frekanslı veri akışı.
+  - Yapay Zeka Tahmin Motoru: Telemetri trendlerini analiz ederek arızaları öngören, özel NumPy tabanlı Lineer Regresyon modeli.
+  - Otomatik Güvenlik Protokolü: AI güven skoru kritik bir arıza öngördüğünde tetiklenen otomatik "Acil Durdurma" (Emergency Stop) sistemi.
+  - İnteraktif Panel: Dinamik veri grafikleri için React 18 ve Recharts ile oluşturulmuştur.
 
-Frontend'e bir PREDICTION_WARNING gönderilir.
+🛠 Teknoloji Yığını (Tech Stack)
 
-Hasta yaralanmasını önlemek için ventilatör otomatik olarak durdurulur.
+Frontend (Ön Yüz)
 
+  - Framework: React 18 (TypeScript)
+  - Durum Yönetimi: Redux Toolkit
+  - Görselleştirme: Recharts
+  - Test: Vitest
 
+Backend (Arka Yüz)
 
-📦 Kurulum ve Ayarlar
+  - API: Python FastAPI
+  - Veri İşleme: NumPy (AI/Matematik işlemleri için)
+  - Test: Pytest
+  - İletişim: WebSockets
+
+⚙️ Kurulum ve Başlangıç
+
 Gereksinimler
-Node.js v18+
 
-Python v3.9+
+  - Node.js v18+
+  - Python v3.9+
 
-1️⃣ Backend'i Başlat (YZ Sunucusu)
+1. Backend Kurulumu (FastAPI)
 
+Backend, simülasyon mantığını ve AI tahmin motorunu yönetir.
+
+# Backend klasörüne gidin
 cd backend
 
-# Sanal ortam oluştur
-python3 -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
+# Sanal ortam (virtual environment) oluşturun
+python -m venv venv
 
-# Bağımlılıkları yükle
+# Sanal ortamı aktif edin
+# Windows için:
+venv\Scripts\activate
+# Mac/Linux için:
+source venv/bin/activate
+
+# Bağımlılıkları yükleyin
 pip install -r requirements.txt
 
-# Sunucuyu çalıştır
-python3 -m uvicorn app.main:app --reload
+# Sunucuyu çalıştırın
+uvicorn main:app --reload
 
+2. Frontend Kurulumu (React)
 
-📡 WebSocket sunucusu şu adreste aktif olacaktır: ws://127.0.0.1:8000/ws
+Frontend, WebSocket akışını görselleştirir ve uyarıları görüntüler.
 
-2️⃣ Frontend'i Başlat (Panel)
-Yeni bir terminal açın:
+# Frontend klasörüne gidin
+cd frontend
 
-# Bağımlılıkları yükle
+# Bağımlılıkları yükleyin
 npm install
 
-# Geliştirme sunucusunu çalıştır
+# Geliştirme sunucusunu başlatın
 npm run dev
 
-✅ Testleri Çalıştırma
-YZ motorunun ve arayüz bileşenlerinin bütünlüğünü doğrulayın.
+🧪 Testleri Çalıştırma
 
-Frontend Testleri (Vitest)
+Proje, hem tahmin algoritması hem de arayüz bileşenleri için birim testleri (unit tests) içerir.
 
-npm run test
-
-Backend Testleri (Pytest)
+Backend Testleri:
 
 cd backend
-python3 -m pytest
+pytest
 
-🎯 Amaç
-Bu proje, aşağıdakileri gösteren bir Biosys Mülakat Çalışması olarak geliştirilmiştir:
+Frontend Testleri:
 
-Gerçek zamanlı sistem mühendisliği
+cd frontend
+npm run test
 
-YZ destekli hata tahmini
+📸 Kullanım
 
-Önce güvenlik (Safety-first) medikal tasarım prensibi
-
-Temiz mimari ve test güdümlü geliştirme (TDD)
-```
+1.  Hem Backend hem de Frontend sunucularını başlatın.
+2.  Tarayıcınızda http://localhost:5173 adresini (veya terminalde gösterilen portu) açın.
+3.  Telemetri akışını başlatmak için "Start Simulation" butonuna tıklayın.
+4.  "Status" (Durum) göstergesini izleyin; AI tahminlerine göre Normal, Warning (Uyarı) veya Critical (Kritik) olarak değişecektir.
