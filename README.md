@@ -1,6 +1,7 @@
 Biosys - Predictive Ventilator Monitor (PoC)
 
-![Biosys Ekran Görüntüsü](ss%201.png)
+
+![Proje Görseli](ss1.png)
 
 ✨ Project Overview
 
