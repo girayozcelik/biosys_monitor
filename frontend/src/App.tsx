@@ -20,7 +20,7 @@ import { Wind, Power, Activity } from "lucide-react";
 function App() {
   useSimulation();
   const dispatch = useDispatch();
-  const { liveData, alerts, isEmergency } = useSelector(
+  const { liveData, alerts, isEmergency, isConnected } = useSelector(
     (state: RootState) => state.monitor,
   );
 
@@ -35,7 +35,7 @@ function App() {
       className={`min-h-screen p-6 md:p-10 font-sans transition-colors duration-700 ${isEmergency ? "bg-red-50" : "bg-biosys-bg"}`}
     >
       <div className="max-w-7xl mx-auto">
-        <Header isConnected={true} />
+        <Header isConnected={isConnected} />
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <div className="col-span-1 lg:col-span-8 space-y-8">
