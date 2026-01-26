@@ -1,5 +1,7 @@
 Biosys - Predictive Ventilator Monitor (PoC)
 
+![Biosys Ekran Görüntüsü](ss%201.png)
+
 ✨ Project Overview
 
 This project is developed as a Proof of Concept (PoC) for Biosys, demonstrating a next-generation ventilator monitoring dashboard. It integrates real-time data visualization with a Python-based AI predictive engine to detect potential device failures before they occur.
