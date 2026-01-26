@@ -1,157 +1,93 @@
-# 🫁 Biosys Predictive Ventilator Monitor
+Biosys - Predictive Ventilator Monitor (PoC)
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/frontend-React_18-61DAFB.svg)
-![FastAPI](https://img.shields.io/badge/backend-FastAPI-009688.svg)
-![AI](https://img.shields.io/badge/AI-Linear_Regression-FF6F00.svg)
-![Tests](https://img.shields.io/badge/tests-100%25_Coverage-success.svg)
+✨ Project Overview
 
-A real-time, **AI-powered medical monitoring dashboard** designed for next-generation mechanical ventilators.  
-The system continuously tracks **airway pressure, flow, and volume**, while running a **Predictive Maintenance Algorithm** to detect mechanical failures _before_ they reach a critical level.
+This project is developed as a Proof of Concept (PoC) for Biosys, demonstrating a next-generation ventilator monitoring dashboard. It integrates real-time data visualization with a Python-based AI predictive engine to detect potential device failures before they occur.
 
-![Dashboard Preview](docs/ss1.png)
+The system simulates ventilator telemetry data and uses a Linear Regression model to predict critical threshold breaches up to 20 seconds in advance, triggering automated safety protocols.
 
----
+✨ Key Features
 
-## 🚀 Key Features
+  - Real-Time Monitoring: High-frequency data streaming via WebSockets for immediate visualization of pressure, airflow, and oxygen levels.
+  - AI Predictive Engine: Custom NumPy based Linear Regression model that analyzes telemetry trends to forecast failures.
+  - Auto-Safety Protocol: Automated "Emergency Stop" trigger when the AI confidence score predicts a critical failure.
+  - Interactive Dashboard: Built with React 18 & Recharts for dynamic data plotting.
 
-- **⚡ Real-Time Monitoring**  
-  Sub-millisecond sensor data streaming via **WebSockets**.
+🛠 Tech Stack
 
-- **🧠 AI Predictive Engine**  
-  Detects abnormal pressure trends using **Linear Regression (NumPy)** to predict:
-  - Filter clogging
-  - Motor degradation  
-    up to **20 seconds in advance**.
+Frontend
 
-- **🛡️ Auto-Safety Protocol**  
-  Automatically triggers an **Emergency Stop** when the AI predicts that a critical safety threshold will be exceeded.
+  - Framework: React 18 (TypeScript)
+  - State Management: Redux Toolkit
+  - Visualization: Recharts
+  - Testing: Vitest
 
-- **🎨 Medical-Grade UI**  
-  Clean, minimalist, iOS-style interface optimized for **high readability in clinical environments**.
+Backend
 
-- **🧪 Robust Engineering**
-  - **Frontend:** Type-safe React + Redux Toolkit
-  - **Backend:** Clean Architecture with FastAPI
-  - **Testing:** Full unit test coverage for both UI and AI logic
+  - API: Python FastAPI
+  - Data Processing: NumPy (for AI/Math operations)
+  - Testing: Pytest
+  - Communication: WebSockets
 
----
+⚙️ Getting Started
 
-## 🛠️ Tech Stack
-
-| Component            | Technology            | Description                             |
-| -------------------- | --------------------- | --------------------------------------- |
-| **Frontend**         | React 18 + TypeScript | Component-based UI architecture         |
-| **State Management** | Redux Toolkit         | Global state & emergency logic handling |
-| **Charts**           | Recharts              | Oscilloscope-style real-time waveforms  |
-| **Backend**          | Python FastAPI        | High-performance async WebSocket server |
-| **AI / Math**        | NumPy                 | Mathematical modeling & trend analysis  |
-| **Testing**          | Vitest & Pytest       | Full-stack testing suite                |
-
----
-
-## 🏗️ Architecture
-
-The project follows **Clean Architecture** principles to ensure scalability, testability, and separation of concerns.
-
-```text
-biosys-dashboard/
-├── backend/               # Python AI Server
-│   ├── app/
-│   │   ├── core/          # Configuration & constants
-│   │   ├── schemas/       # Pydantic models
-│   │   ├── services/      # AI Engine & simulation logic
-│   │   └── api/           # WebSocket routes
-│   └── tests/             # Pytest suites
-│
-└── src/                   # React Frontend
-    ├── components/        # Reusable UI components (StatCard, AlarmPanel)
-    ├── hooks/             # Custom hooks (useSimulation)
-    ├── store/             # Redux slices & global state
-    └── test/              # Vitest test suites
-
-
-🧠 How the AI Works (Predictive Maintenance)
-
-1.Simulation
-The backend simulates a ventilator motor accumulating dust and debris using a Drift Factor.
-
-2.Data Collection
-The AIEngine class maintains a sliding window of the last 30 pressure readings.
-
-3.Linear Regression
-Using np.polyfit, the algorithm calculates the pressure trend slope.
-
-4.Prediction
-The model projects pressure values 50 time-steps into the future.
-
-5.Intervention
-If Projected_Value > Safety_Threshold:
-
-A PREDICTION_WARNING is sent to the frontend
-
-The ventilator is automatically halted to prevent patient injury
-
-📦 Installation & Setup
 Prerequisites
 
-Node.js v18+
+  - Node.js v18+
+  - Python v3.9+
 
-Python v3.9+
+1. Backend Setup (FastAPI)
 
-1️⃣ Start the Backend (AI Server)
+The backend handles the simulation logic and the AI prediction engine.
 
+# Navigate to the backend directory
 cd backend
 
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate      # Windows: venv\Scripts\activate
+# Create a virtual environment
+python -m venv venv
+
+# Activate the virtual environment
+# Windows:
+venv\Scripts\activate
+# Mac/Linux:
+source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run server
-python3 -m uvicorn app.main:app --reload
+# Run the server
+uvicorn main:app --reload
 
-📡 WebSocket server will be available at:
-ws://127.0.0.1:8000/ws
+2. Frontend Setup (React)
 
+The frontend visualizes the WebSocket stream and displays alerts.
 
-2️⃣ Start the Frontend (Dashboard)
-
-Open a new terminal:
-
+# Navigate to the frontend directory
+cd frontend
 
 # Install dependencies
 npm install
 
-# Run development server
+# Start the development server
 npm run dev
 
+🧪 Running Tests
 
-✅ Running Tests
+The project includes unit tests for both the predictive algorithm and the UI components.
 
-Verify the integrity of the AI engine and UI components.
-
-Frontend Tests (Vitest)
-
-npm run test
-
-
-Backend Tests (Pytest)
+Backend Tests:
 
 cd backend
-python3 -m pytest
+pytest
 
-🎯 Purpose
+Frontend Tests:
 
-This project was developed as a Biosys Interview Case, demonstrating:
+cd frontend
+npm run test
 
-Real-time systems engineering
+📸 Usage
 
-AI-assisted fault prediction
-
-Medical safety-first design
-
-Clean architecture & test-driven development
-```
+1.  Start both Backend and Frontend servers.
+2.  Open http://localhost:5173 (or the port shown in your terminal).
+3.  Click "Start Simulation" to begin the telemetry stream.
+4.  Observe the "Status" indicator; it will change from Normal to Warning or Critical based on the AI's predictions.
